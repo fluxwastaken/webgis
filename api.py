@@ -3,21 +3,19 @@ import requests
 
 app = Flask(__name__)
 
-THINGSPEAK_WRITE_API_KEY = '1GY3ELI7PBHDLJV2' 
-THINGSPEAK_WRITE_URL = 'https://api.thingspeak.com/update'
-
-THINGSPEAK_READ_API_KEY = 'YUIFQ3ZB7FIB1704' 
-THINGSPEAK_READ_URL = 'https://api.thingspeak.com/channels/2650707/feeds.json'
 #default route (not important)
 @app.route('/')
 def home():
     return jsonify({"message": "Welcome to Flask and ThingSpeak API"})
 
+THINGSPEAK_WRITE_API_KEY = '1GY3ELI7PBHDLJV2' 
+THINGSPEAK_WRITE_URL = 'https://api.thingspeak.com/update'
+
 #API endpoint for sending data to thingspeak database
 @app.route('/send_data', methods=['POST'])
 def send_data():
     data = request.get_json()  # Get JSON data sent in the POST request
-    field1_value = data.get('field1', 0)  # Get value for field1
+    field1_value = data.get('field1', 10)  # Assign value for field1
 
     #specify the parameters
     params = {
@@ -32,6 +30,9 @@ def send_data():
     else:
         return jsonify({"message": "Failed to send data"}), 500
 
+THINGSPEAK_READ_API_KEY = 'YUIFQ3ZB7FIB1704' 
+THINGSPEAK_READ_URL = 'https://api.thingspeak.com/channels/2650707/feeds.json'
+
 #API endpoint for getting data from thingspeak database
 @app.route('/get_data', methods=['GET'])
 def get_data():
@@ -42,7 +43,7 @@ def get_data():
 
     response = requests.get(THINGSPEAK_READ_URL, params=params)
     print(response.json())
-
+    
     if response.status_code == 200:
         return response.json()["feeds"], 200
     else:
