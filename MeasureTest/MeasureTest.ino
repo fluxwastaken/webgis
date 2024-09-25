@@ -278,7 +278,9 @@ void loop(){
   float dist = Sensor.measureDistanceCm(); //distance acquisition
   //float floodlvl = 10.16-dist; //measuring distance of water level from ground level
   //float distIn = floodlvl/2.54; //converting centimeters to inches
-  
+  if(dist < 0){
+    resetDevice();
+  }
   Serial.println(dist);
   sendDataToThingSpeak(dist);
 
