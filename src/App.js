@@ -26,16 +26,20 @@ function App() {
 
   // Define color values
   const colors = {
-    yellow: "rgba(242, 186, 73, 0.5)", 
-    orange: "rgba(252, 76, 2, 0.5)",      
+    green: "rgba(11, 156, 49, 0.5)", 
+    yellow: "rgba(252, 76, 2, 0.5)",      
     red: "rgba(180, 0, 50, 0.5)"            
   };
   
   // Define the warning levels for flood levels
   const legendItems = {
-    yellowWarning: "Monitor the weather condition.", 
-    orangeWarning: "Be ready for possible evacuation.",  
-    redWarning: "All residents should evacuate." 
+    greenWarning1: "Gutter deep flood", 
+    greenWarning2: "Half-knee deep flood", 
+    yellowWarning1: "Half-tire deep flood",  
+    yellowWarning2: "Knee deep flood",  
+    redWarning1: "Tire deep flood", 
+    redWarning2: "Waist deep flood", 
+    redWarning3: "Chest deep flood" 
   };
   
   // Function to determine the appropriate warning based on flood level
@@ -43,12 +47,20 @@ function App() {
     const level = parseFloat(floodLevel); // Convert string to float
     if (isNaN(level)) {
       return "No data available";  // If not a valid number, return a default message
+    } else if (level <= 0.20) {
+      return legendItems.greenWarning1;
     } else if (level <= 0.25) {
-      return legendItems.yellowWarning;
+      return legendItems.greenWarning2;
+    } else if (level <= 0.33) {
+      return legendItems.yellowWarning1;
     } else if (level <= 0.50) {
-      return legendItems.orangeWarning;
+      return legendItems.yellowWarning2;
+    } else if (level <= 0.66) {
+      return legendItems.redWarning1;
+    } else if (level <= 0.94) {
+      return legendItems.redWarning2;
     } else {
-      return legendItems.redWarning;
+      return legendItems.redWarning3;
     }
   };
 
@@ -58,9 +70,9 @@ function App() {
     if (isNaN(level)) {
       return "000000";  // Default to transparent if no valid data
     } else if (level <= 0.25) {
-      return colors.yellow;
+      return colors.green;
     } else if (level <= 0.50) {
-      return colors.orange;
+      return colors.yellow;
     } else if (level > 0.50){
       return colors.red;
     }
@@ -203,17 +215,26 @@ function App() {
       </MapContainer>
       <div className='sidemenu'>
         <h3 style={{marginTop: 0}}>Legend</h3>
-        <div className='legend-item'>
-          <div className='legend-color' style={{ backgroundColor: colors.yellow }}></div>
-          <div>Low Flood Level: 0 - 0.25 m</div>
+        <div className='legend-item' style={{ display: 'flex', alignItems: 'flex-start' }}>
+          <div className='legend-color' style={{ backgroundColor: colors.green, marginRight: '10px' }}></div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div><b>Low Flood Level: 0 - 0.25 m</b></div>
+            <div>PATV (Passable to All Types of Vehicles)</div>
+          </div>
         </div>
-        <div className='legend-item'>
-          <div className='legend-color' style={{ backgroundColor: colors.orange }}></div>
-          <div>Medium Flood Level: 0.25 - 0.50 m</div>
+        <div className='legend-item' style={{ display: 'flex', alignItems: 'flex-start' }}>
+          <div className='legend-color' style={{ backgroundColor: colors.yellow, marginRight: '10px' }}></div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div><b>Medium Flood Level: 0.25 - 0.50 m</b></div>
+          <div>NPLV (Not Passable to Light Vehicles)</div>
+          </div>
         </div>
-        <div className='legend-item'>
-          <div className='legend-color' style={{ backgroundColor: colors.red }}></div>
-          <div>High Flood Level: &gt; 0.50 m</div>
+        <div className='legend-item' style={{ display: 'flex', alignItems: 'flex-start' }}>
+          <div className='legend-color' style={{ backgroundColor: colors.red, marginRight: '10px' }}></div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div><b>High Flood Level: &gt; 0.50 m</b></div>
+          <div>NPATV (Not Passable to All Types of Vehicles)</div>
+        </div>
         </div>
       </div>
       {selectedPopup && (

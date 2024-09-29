@@ -60,7 +60,7 @@ html, body {
   /* Style the popup card */
   .popup-card {
     position: absolute;
-    top: calc(20px + 145px); /* Adjust positioning based on the size of the legend and any other content */
+    top: calc(20px + 200px); /* Adjust positioning based on the size of the legend and any other content */
     right: 20px; /* Align with the right edge of the map */
     background: white;
     padding: 10px;
