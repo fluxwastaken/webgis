@@ -100,7 +100,7 @@ function App() {
     { position: [14.83753, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 ? data.field4 + " m" : "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 ? smoothingData.device4 + " m" : "No data available."}},
     { position: [14.83769, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 ? data.field3 + " m" : "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 ? smoothingData.device3 + " m"  : "No data available."}},
     { position: [14.837715, 120.73695], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 ? data.field2 + " m" : "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 ? smoothingData.device2 + " m" : "No data available."}},
-    { position: [14.83775, 120.73765], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}}
+    { position: [14.83775, 120.73765], details: { deviceNo: "Device 1",location: "Verina Sari-Sari Store", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}}
   ];  
 
   // Define paths dynamically based on flood levels
