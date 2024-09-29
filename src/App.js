@@ -149,8 +149,6 @@ function App() {
         });
     };    
 
-
-
     // Using useEffect for initial data fetch and setting up the interval
     useEffect(() => {
       fetchData(); // Fetch data on component mount
@@ -166,7 +164,7 @@ function App() {
     }, []);  // Empty dependency array means this runs once on component mount
 
     // Loading check for both data and smoothingData
-    if (!data || !data.field1 ) {
+    if (!data ) {
       return <div>Loading...</div>; // Display loading indicator while data is being fetched
     }
 
