@@ -106,8 +106,8 @@ function App() {
   // Define paths dynamically based on flood levels
   const paths = [
     { positions: [[14.8374, 120.73515],[14.83753, 120.7355], [14.83761, 120.73575], [14.837635, 120.7359]], color: getPathColor(data.field4), weight: 17 },
-    { positions: [[14.837635, 120.7359], [14.83765, 120.7360], [14.83766, 120.73611], [14.83766, 120.7361], [14.8377, 120.73655], [14.83771, 120.7367012]], color: getPathColor("0.4"), weight: 17 },
-    { positions: [[14.83771, 120.7367], [14.837715, 120.7370], [14.837725, 120.7372005]], color: getPathColor("0"), weight: 17 },
+    { positions: [[14.837635, 120.7359], [14.83765, 120.7360], [14.83766, 120.73611], [14.83766, 120.7361], [14.8377, 120.73655], [14.83771, 120.7367012]], color: getPathColor(data.field3), weight: 17 },
+    { positions: [[14.83771, 120.7367], [14.837715, 120.7370], [14.837725, 120.7372005]], color: getPathColor(data.field2), weight: 17 },
     { positions: [[14.837725, 120.7372], [14.83775, 120.7375], [14.83779, 120.73778]], color: getPathColor(data.field1), weight: 17 }
   ];
 
