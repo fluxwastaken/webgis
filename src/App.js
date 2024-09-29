@@ -85,10 +85,10 @@ function App() {
 
   // Define marker positions and detailed information
   const markers = [
-    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 + " m" || "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 + " m" || "No data available."}},
-    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 + " m" || "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 + " m"  || "No data available."}},
-    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 + " m" || "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 + " m" || "No data available."}},
-    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 + " m" || "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 + " m" || "No data available."}}
+    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 ? data.field4 + " m" : "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 ? smoothingData.device4 + " m" : "No data available."}},
+    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 ? data.field3 + " m" : "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 ? smoothingData.device3 + " m"  : "No data available."}},
+    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 ? data.field2 + " m" : "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 ? smoothingData.device2 + " m" : "No data available."}},
+    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}}
   ];  
 
   // Define paths dynamically based on flood levels
@@ -100,8 +100,9 @@ function App() {
   ];
 
    // Function to fetch data from the Flask API
-   const fetchData = () => {
-    fetch("http://127.0.0.1:5000/get_data")
+   // Function to fetch data from the Flask API
+  const fetchData = () => {
+    fetch("http://127.0.0.1:5000/get_latest")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -110,21 +111,20 @@ function App() {
       })
       .then((feeds) => {
         if (feeds && feeds.length > 0) {
-          const latestFeed = feeds.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+          // Assuming feeds is an array of values for field1, field2, field3, field4
           setdata({
-            created_at: latestFeed.created_at,
-            entry_id: latestFeed.entry_id,
-            field1: latestFeed.field1,
-            field2: latestFeed.field2,
-            field3: latestFeed.field3,
-            field4: latestFeed.field4
+            field1: feeds[0],
+            field2: feeds[1],
+            field3: feeds[2],
+            field4: feeds[3],
           });
         }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);  // Log any error that occurs
       });
-    };
+  };
+
 
     const fetchSmoothData = () => {
       fetch("http://127.0.0.1:5000/get_smoothing_data")
@@ -164,7 +164,7 @@ function App() {
     }, []);  // Empty dependency array means this runs once on component mount
 
     // Loading check for both data and smoothingData
-    if (!data ) {
+    if (!data || !data.field1 || !data.field2 || !data.field2 || !data.field3 || !data.field4 ) {
       return <div>Loading...</div>; // Display loading indicator while data is being fetched
     }
 
