@@ -122,9 +122,57 @@ def perform_smoothing(device, distances,forecast_list):
         print(forecast) #prints -> __index__ ,  __value__
         # Display only the numerical value
         print(forecast.iloc[0])
-        forecast_list[f"{device}"] = forecast.iloc[0]
+        forecast_list[f"{device}"] = round(forecast.iloc[0],2)
 
         return forecast_list
+
+def get_latest_per_device(sorted_entries):
+    latest_entries = {
+        'field1': None,
+        'field2': None,
+        'field3': None,
+        'field4': None
+    }
+    
+    # Loop through each entry in the sorted list
+    for entry in sorted_entries:
+        # Check each field and store the first occurrence
+        for field in latest_entries:
+            if latest_entries[field] is None and entry[field] is not None:
+                latest_entries[field] = entry[field]
+        
+        # If we already found the latest entries for all fields, break the loop
+        if all(latest_entries.values()):
+            break
+    print(latest_entries)
+    # Return the latest entries as a list
+    return [latest_entries[field] for field in latest_entries if latest_entries[field] is not None]
+
+
+@app.route('/get_latest', methods=['GET'])
+def get_latest():
+     # Dictionary to store the latest entry for each device
+    latest_entries = {
+        'field1': None,
+        'field2': None,
+        'field3': None,
+        'field4': None
+    }
+    params = {
+        'api_key': THINGSPEAK_READ_API_KEY
+    }
+
+    response = requests.get(THINGSPEAK_READ_URL, params=params)
+    feeds = response.json()["feeds"]
+    
+    # Sort feeds based on "entry_id" in descending order
+    sorted_list = sorted(feeds, key=lambda x: x["entry_id"], reverse=True)
+
+    # Print the sorted list to verify
+    print(sorted_list)
+    latest_entries =  get_latest_per_device(sorted_list)
+    print(latest_entries)
+    return latest_entries,200
 
 if __name__ == '__main__':
     app.run(debug=True)

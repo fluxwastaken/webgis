@@ -24,13 +24,6 @@ function App() {
   const initialCenter = [14.8378, 120.7395];
   const initialZoom = 17;
 
-  // const handleRecenter = () => {
-  //   const map = mapRef.current;
-  //   if (map) {
-  //     map.setView(initialCenter, initialZoom); // Recenter the map
-  //   }
-  // };
-
   // Define color values
   const colors = {
     yellow: "rgba(242, 186, 73, 0.5)", 
@@ -92,10 +85,10 @@ function App() {
 
   // Define marker positions and detailed information
   const markers = [
-    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 || "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 || "No data available."}},
-    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 || "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3  || "No data available."}},
-    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 || "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 || "No data available."}},
-    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 || "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 || "No data available."}}
+    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 + " m" || "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 + " m" || "No data available."}},
+    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 + " m" || "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 + " m"  || "No data available."}},
+    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 + " m" || "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 + " m" || "No data available."}},
+    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 + " m" || "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 + " m" || "No data available."}}
   ];  
 
   // Define paths dynamically based on flood levels
@@ -171,7 +164,7 @@ function App() {
     }, []);  // Empty dependency array means this runs once on component mount
 
     // Loading check for both data and smoothingData
-    if (!data || !data.field1 ) {
+    if (!data ) {
       return <div>Loading...</div>; // Display loading indicator while data is being fetched
     }
 
@@ -223,9 +216,6 @@ function App() {
           <div>High Flood Level: &gt; 0.50 m</div>
         </div>
       </div>
-      {/* <button className="recenter-button" onClick={handleRecenter}>
-        Recenter Map
-      </button> */}
       {selectedPopup && (
         <div className='popup-card'>
           <button className='close-btn' onClick={() => setSelectedPopup(null)}>×</button>
