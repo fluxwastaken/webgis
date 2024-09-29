@@ -73,16 +73,16 @@ def get_smoothing_data():
         # Ensure 'field1' exists and is not None
         if entry["field1"]:
         # Append the float value of 'field1' to the distances_field1 list
-            distances_field1.append(float(entry["field1"]))
+            distances_field1.append(round(float(entry["field1"]), 2))
         if entry["field2"]:
         # Append the float value of 'field2' to the distances_field2 list
-            distances_field2.append(float(entry["field2"]))
+            distances_field2.append(round(float(entry["field1"]), 2))
         if entry["field3"]:
         # Append the float value of 'field3' to the distances_field3 list
-            distances_field3.append(float(entry["field3"]))
+            distances_field3.append(round(float(entry["field1"]), 2))
         if entry["field4"]:
         # Append the float value of 'field4' to the distances_field4 list
-            distances_field4.append(float(entry["field4"]))
+            distances_field4.append(round(float(entry["field1"]), 2))
 
     #For checking if all were appended
     print(distances_field1)
@@ -122,7 +122,7 @@ def perform_smoothing(device, distances,forecast_list):
         print(forecast) #prints -> __index__ ,  __value__
         # Display only the numerical value
         print(forecast.iloc[0])
-        forecast_list[f"{device}"] = forecast.iloc[0]
+        forecast_list[f"{device}"] = round(forecast.iloc[0],2)
 
         return forecast_list
 

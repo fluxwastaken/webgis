@@ -92,10 +92,10 @@ function App() {
 
   // Define marker positions and detailed information
   const markers = [
-    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 || "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 || "No data available."}},
-    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 || "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3  || "No data available."}},
-    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 || "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 || "No data available."}},
-    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 || "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 || "No data available."}}
+    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 + " m" || "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 + " m" || "No data available."}},
+    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 + " m" || "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 + " m"  || "No data available."}},
+    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 + " m" || "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 + " m" || "No data available."}},
+    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 + " m" || "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 + " m" || "No data available."}}
   ];  
 
   // Define paths dynamically based on flood levels
@@ -155,6 +155,8 @@ function App() {
           console.error("Error fetching data:", error);  // Log any error that occurs
         });
     };    
+
+
 
     // Using useEffect for initial data fetch and setting up the interval
     useEffect(() => {
