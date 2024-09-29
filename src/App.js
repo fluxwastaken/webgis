@@ -24,13 +24,6 @@ function App() {
   const initialCenter = [14.8378, 120.7395];
   const initialZoom = 17;
 
-  // const handleRecenter = () => {
-  //   const map = mapRef.current;
-  //   if (map) {
-  //     map.setView(initialCenter, initialZoom); // Recenter the map
-  //   }
-  // };
-
   // Define color values
   const colors = {
     yellow: "rgba(242, 186, 73, 0.5)", 
@@ -225,9 +218,6 @@ function App() {
           <div>High Flood Level: &gt; 0.50 m</div>
         </div>
       </div>
-      {/* <button className="recenter-button" onClick={handleRecenter}>
-        Recenter Map
-      </button> */}
       {selectedPopup && (
         <div className='popup-card'>
           <button className='close-btn' onClick={() => setSelectedPopup(null)}>×</button>
