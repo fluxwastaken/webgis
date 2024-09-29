@@ -5,7 +5,7 @@ html, body {
     width: 100%;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 14.5px;
 }
 
 .map-container {
@@ -31,7 +31,7 @@ html, body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1000; 
-    width: 300px; 
+    width: 340px; 
   }
 
 .flood-watch-header {
@@ -60,7 +60,7 @@ html, body {
   /* Style the popup card */
   .popup-card {
     position: absolute;
-    top: calc(20px + 200px); /* Adjust positioning based on the size of the legend and any other content */
+    top: calc(20px + 180px); /* Adjust positioning based on the size of the legend and any other content */
     right: 20px; /* Align with the right edge of the map */
     background: white;
     padding: 10px;
@@ -68,7 +68,7 @@ html, body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1000; /* Ensure it appears on top of the map */
-    width: 300px; /* Limit the width of the popup card */
+    width: 340px; /* Limit the width of the popup card */
     margin-bottom: 0;
   }
   

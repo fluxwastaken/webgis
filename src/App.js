@@ -21,8 +21,8 @@ function App() {
   const [selectedPopup, setSelectedPopup] = useState(null);
 
   // Initial center and zoom level
-  const initialCenter = [14.8378, 120.7395];
-  const initialZoom = 17;
+  const initialCenter = [14.8375, 120.7379];
+  const initialZoom = 18;
 
   // Define color values
   const colors = {
@@ -97,18 +97,18 @@ function App() {
 
   // Define marker positions and detailed information
   const markers = [
-    { position: [14.8375, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 ? data.field4 + " m" : "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 ? smoothingData.device4 + " m" : "No data available."}},
-    { position: [14.8377, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 ? data.field3 + " m" : "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 ? smoothingData.device3 + " m"  : "No data available."}},
-    { position: [14.83778, 120.7378], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 ? data.field2 + " m" : "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 ? smoothingData.device2 + " m" : "No data available."}},
-    { position: [14.8386, 120.7395], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}}
+    { position: [14.83753, 120.7355], details: { deviceNo: "Device 4", location: "Iglesia ni Kristo: Lokal ng Hangonoy", floodLevel: data.field4 ? data.field4 + " m" : "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 ? smoothingData.device4 + " m" : "No data available."}},
+    { position: [14.83769, 120.73655], details: { deviceNo: "Device 3", location: "Brgy. Hall Sto. Niño de Hangonoy", floodLevel: data.field3 ? data.field3 + " m" : "No data available.", warning: getFloodWarning(data.field3), forecast: smoothingData.device3 ? smoothingData.device3 + " m"  : "No data available."}},
+    { position: [14.837715, 120.73695], details: { deviceNo: "Device 2", location: "Angel's Ice Cream Hangonoy", floodLevel: data.field2 ? data.field2 + " m" : "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 ? smoothingData.device2 + " m" : "No data available."}},
+    { position: [14.83775, 120.73765], details: { deviceNo: "Device 1",location: "Sto. Niño Main Road", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}}
   ];  
 
   // Define paths dynamically based on flood levels
   const paths = [
-    { positions: [[14.83753, 120.7355], [14.8376, 120.73575], [14.83765, 120.7360], [14.83769, 120.7364], [14.8377, 120.73655]], color: getPathColor(data.field4), weight: 17 },
-    { positions: [[14.8377, 120.73655], [14.837715, 120.7370], [14.83775, 120.7375], [14.83778, 120.7378]], color: getPathColor(data.field3), weight: 17 },
-    { positions: [[14.83778, 120.7378], [14.83793, 120.73825], [14.83826, 120.738955], [14.83824, 120.7389], [14.83866, 120.7395]], color: getPathColor(data.field2), weight: 17 },
-    { positions: [[14.83866, 120.7395], [14.8400, 120.7415]], color: getPathColor(data.field1), weight: 17 }
+    { positions: [[14.8374, 120.73515],[14.83753, 120.7355], [14.83761, 120.73575], [14.837635, 120.7359]], color: getPathColor(data.field4), weight: 17 },
+    { positions: [[14.837635, 120.7359], [14.83765, 120.7360], [14.83766, 120.73611], [14.83766, 120.7361], [14.8377, 120.73655], [14.83771, 120.7367012]], color: getPathColor("0.4"), weight: 17 },
+    { positions: [[14.83771, 120.7367], [14.837715, 120.7370], [14.837725, 120.7372005]], color: getPathColor("0"), weight: 17 },
+    { positions: [[14.837725, 120.7372], [14.83775, 120.7375], [14.83779, 120.73778]], color: getPathColor(data.field1), weight: 17 }
   ];
 
    // Function to fetch data from the Flask API
@@ -187,7 +187,7 @@ function App() {
           zoom={initialZoom}
           minZoom={initialZoom}
           maxZoom={initialZoom}
-          zoomControl={false} // Disable zoom controls
+          zoomControl={false}
           className="map"
           whenCreated={map => { mapRef.current = map; }}
         >
@@ -204,14 +204,16 @@ function App() {
             }}
           />
         ))}
-        {paths.map((path, index) => (
-          <Polyline
-            key={index}
-            positions={path.positions}
-            color={path.color}
-            weight={path.weight}
-          />
-        ))}
+       {paths.map((path, index) => (
+        <Polyline
+          key={index}
+          positions={path.positions}
+          color={path.color}
+          weight={path.weight}
+          lineCap="butt"   // Boxy ends
+          lineJoin="miter" // Boxy corners
+        />
+      ))}
       </MapContainer>
       <div className='sidemenu'>
         <h3 style={{marginTop: 0}}>Legend</h3>
