@@ -173,7 +173,7 @@ void sendDataToThingSpeak(float field1) {
   }
 
   // Construct the GET request
-  String str = "GET https://api.thingspeak.com/update?api_key=1GY3ELI7PBHDLJV2&field1=" + String(field1);
+  String str = "GET https://api.thingspeak.com/update?api_key=1GY3ELI7PBHDLJV2&field4=" + String(field1);
   sim.println(str);
 
   delay(3000);  // Ensure the data is sent
@@ -285,7 +285,7 @@ void loop(){
   sendDataToThingSpeak(dist);
 
 
-  delay(300000); //the interval of data reading is delayed every 5 minutes
+  delay(600000); //the interval of data reading is delayed every 10 minutes
   
 
 }
