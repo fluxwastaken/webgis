@@ -12,7 +12,7 @@ CORS(app)
 def home():
     return jsonify({"message": "Welcome to Flask and ThingSpeak API"})
 
-THINGSPEAK_WRITE_API_KEY = '1GY3ELI7PBHDLJV2' 
+THINGSPEAK_WRITE_API_KEY = 'KUGDW9RA34EWPLQV' 
 THINGSPEAK_WRITE_URL = 'https://api.thingspeak.com/update'
 
 #API endpoint for sending data to thingspeak database
@@ -34,8 +34,8 @@ def send_data():
     else:
         return jsonify({"message": "Failed to send data"}), 500
 
-THINGSPEAK_READ_API_KEY = 'YUIFQ3ZB7FIB1704' 
-THINGSPEAK_READ_URL = 'https://api.thingspeak.com/channels/2650707/feeds.json'
+THINGSPEAK_READ_API_KEY = 'A46JROYTYFVY6JQE' 
+THINGSPEAK_READ_URL = 'https://api.thingspeak.com/channels/2683477/feeds.json'
 
 #API endpoint for getting data from thingspeak database
 @app.route('/get_data', methods=['GET'])

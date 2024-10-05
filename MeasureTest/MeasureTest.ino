@@ -16,7 +16,7 @@ const String USER = "";
 const String PASS = "";
 
 const String THING_SPEAK_API_URL  = "https://api.thingspeak.com/update";
-const String THING_SPEAK_API_KEY  = "1GY3ELI7PBHDLJV2";
+const String THING_SPEAK_API_KEY  = "KUGDW9RA34EWPLQV";
 String request_url = "";
 
 void setup() {
@@ -173,7 +173,7 @@ void sendDataToThingSpeak(float field1) {
   }
 
   // Construct the GET request
-  String str = "GET https://api.thingspeak.com/update?api_key=1GY3ELI7PBHDLJV2&field4=" + String(field1);
+  String str = "GET https://api.thingspeak.com/update?api_key=KUGDW9RA34EWPLQV&field1=" + String(field1);
   sim.println(str);
 
   delay(3000);  // Ensure the data is sent
