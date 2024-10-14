@@ -283,6 +283,7 @@ void loop(){
   }
   Serial.println(dist);
   sendDataToThingSpeak(dist);
+  sendDataToThingSpeak(floodlvl);
 
 
   delay(600000); //the interval of data reading is delayed every 10 minutes
