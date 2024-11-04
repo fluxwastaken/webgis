@@ -175,9 +175,9 @@ function App() {
     }, []);  // Empty dependency array means this runs once on component mount
 
     // Loading check for both data and smoothingData
-    // if (!data || !data.field1 || !data.field2 || !data.field2 || !data.field3 || !data.field4 ) {
-    //   return <div>Loading...</div>; // Display loading indicator while data is being fetched
-    // }
+    if (!data || !data.field1 || !data.field2 || !data.field2 || !data.field3 || !data.field4 ) {
+    return <div>Loading...</div>; // Display loading indicator while data is being fetched
+    }
 
   return (
     <div className="map-container">
