@@ -19,6 +19,7 @@ const defaultIcon = L.icon({
 function App() {
   const mapRef = useRef(null);
   const [selectedPopup, setSelectedPopup] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Initial center and zoom level
   const initialCenter = [14.8415, 120.7379];
@@ -66,7 +67,6 @@ function App() {
 
   // Function to determine the path color based on flood level
   const getPathColor = (floodLevel) => {
-    console.log(floodLevel);
     const level = parseFloat(floodLevel);
     if (isNaN(level)) {
       return "000000";  // Default to transparent if no valid data
@@ -96,13 +96,36 @@ function App() {
     device4: ""
   });
 
-  // Define marker positions and detailed information
+  // Improved helper function to check if data is available and meaningful
+  const isValidFloodData = (value) => {
+    // Convert value to number if it’s a string, check if it's a valid number and not zero
+    const numberValue = Number(value);
+    return !isNaN(numberValue) && numberValue > 0;
+  };
+
+  // Define markers with conditional checks for flood data
   const markers = [
-    // { position: [14.84792, 120.73569], details: { deviceNo: "Device 1", location: "JMC", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}},
-    { position: [14.84249, 120.73535], details: { deviceNo: "Device 2", location: "Capati Videoke", floodLevel: data.field1 ? data.field1 + " m" : "No data available.", warning: getFloodWarning(data.field1), forecast: smoothingData.device1 ? smoothingData.device1 + " m" : "No data available."}},
-    { position: [14.83927, 120.73588], details: { deviceNo: "Device 3", location: "Charis Store", floodLevel: data.field2 ? data.field2 + " m" : "No data available.", warning: getFloodWarning(data.field2), forecast: smoothingData.device2 ? smoothingData.device2 + " m"  : "No data available."}},
-    // { position: [14.83441, 120.73171], details: { deviceNo: "Device 4", location: "The Goodie Rack", floodLevel: data.field4 ? data.field4 + " m" : "No data available.", warning: getFloodWarning(data.field4), forecast: smoothingData.device4 ? smoothingData.device4 + " m" : "No data available."}}
-  ];  
+    {
+      position: [14.84249, 120.73535],
+      details: {
+        deviceNo: "Device 2",
+        location: "Capati Videoke",
+        floodLevel: isValidFloodData(data?.field1) ? `${data.field1} m` : "No data available",
+        warning: isValidFloodData(data?.field1) ? getFloodWarning(data.field1) : "No warning data",
+        forecast: isValidFloodData(smoothingData?.device1) ? `${smoothingData.device1} m` : "No forecast data available"
+      }
+    },
+    {
+      position: [14.83927, 120.73588],
+      details: {
+        deviceNo: "Device 3",
+        location: "Charis Store",
+        floodLevel: isValidFloodData(data?.field2) ? `${data.field2} m` : "No data available",
+        warning: isValidFloodData(data?.field2) ? getFloodWarning(data.field2) : "No warning data",
+        forecast: isValidFloodData(smoothingData?.device2) ? `${smoothingData.device2} m` : "No forecast data available"
+      }
+    }
+  ];
 
   // Define paths dynamically based on flood levels
   const paths = [
@@ -122,13 +145,14 @@ function App() {
         return res.json();
       })
       .then((feeds) => {
+        console.log(feeds)
         if (feeds && feeds.length > 0) {
           // Assuming feeds is an array of values for field1, field2, field3, field4
           setdata({
-            field1: feeds[0] / 100,
-            field2: feeds[1] / 100,
-            field3: feeds[2] / 100,
-            field4: feeds[3] / 100,
+            field1: (feeds[0] / 100).toFixed(4),
+            field2: (feeds[1] / 100).toFixed(4),
+            field3: (feeds[2] / 100).toFixed(4),
+            field4: (feeds[3] / 100).toFixed(4),
           });
         } 
       })
@@ -147,12 +171,13 @@ function App() {
           return res.json();
         })
         .then((feeds) => {
+          console.log(feeds)
           if (feeds) {
             setSmoothingData({
-              device1: feeds.device1 / 100,
-              device2: feeds.device2 / 100,
-              device3: feeds.device3 / 100,
-              device4: feeds.device4 / 100
+              device1: (feeds.device1 / 100).toFixed(4),
+              device2: (feeds.device2 / 100).toFixed(4),
+              device3: (feeds.device3 / 100).toFixed(4),
+              device4: (feeds.device4 / 100).toFixed(4)
             });
           }
         })        
@@ -167,17 +192,17 @@ function App() {
       fetchSmoothData();
   
       const interval = setInterval(() => {
-        fetchData(); // Fetch data every 5 minutes (300,000 ms)
+        fetchData();
         fetchSmoothData();
       }, 300000);
   
-      // Cleanup interval on component unmount
+      setTimeout(() => setIsLoading(false), 1000);
+  
       return () => clearInterval(interval);
     }, []);  // Empty dependency array means this runs once on component mount
 
-    // Loading check for both data and smoothingData
-    if (!data || !data.field1 || !data.field2) {
-      return <div>Loading...</div>; // Display loading indicator while data is being fetched
+    if (isLoading || !data.field1 || !data.field2 || !smoothingData.device1 || !smoothingData.device2) {
+      return <div>Loading...</div>;
     }
 
   return (
