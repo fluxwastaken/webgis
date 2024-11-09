@@ -110,9 +110,9 @@ function App() {
       details: {
         deviceNo: "Device 2",
         location: "Capati Videoke",
-        floodLevel: isValidFloodData(data?.field1) ? `${data.field1} m` : "No data available",
-        warning: isValidFloodData(data?.field1) ? getFloodWarning(data.field1) : "No warning data",
-        forecast: isValidFloodData(smoothingData?.device1) ? `${smoothingData.device1} m` : "No forecast data available"
+        floodLevel: isValidFloodData(data?.field2) ? `${data.field2} m` : "No data available",
+        warning: isValidFloodData(data?.field2) ? getFloodWarning(data.field2) : "No warning data",
+        forecast: isValidFloodData(smoothingData?.device2) ? `${smoothingData.device2} m` : "No forecast data available"
       }
     },
     {
@@ -120,9 +120,9 @@ function App() {
       details: {
         deviceNo: "Device 3",
         location: "Charis Store",
-        floodLevel: isValidFloodData(data?.field2) ? `${data.field2} m` : "No data available",
-        warning: isValidFloodData(data?.field2) ? getFloodWarning(data.field2) : "No warning data",
-        forecast: isValidFloodData(smoothingData?.device2) ? `${smoothingData.device2} m` : "No forecast data available"
+        floodLevel: isValidFloodData(data?.field3) ? `${data.field3} m` : "No data available",
+        warning: isValidFloodData(data?.field3) ? getFloodWarning(data.field3) : "No warning data",
+        forecast: isValidFloodData(smoothingData?.device3) ? `${smoothingData.device3} m` : "No forecast data available"
       }
     }
   ];
@@ -130,8 +130,8 @@ function App() {
   // Define paths dynamically based on flood levels
   const paths = [
     // { positions: [[14.8485, 120.7357],[14.8468, 120.73569], [14.8460, 120.73535], [14.8451, 120.7349], [14.8446, 120.73485], [14.8435, 120.73494]], color: getPathColor(data.field1), weight: 9 },
-    { positions: [[14.8435, 120.73494], [14.8428, 120.73513], [14.84249, 120.73533], [14.8412, 120.73634], [14.8405, 120.7366], [14.83923, 120.7368]], color: getPathColor(data.field1), weight: 9 },
-    { positions: [[14.8393, 120.7367], [14.83927, 120.73588], [14.83907, 120.7345], [14.83812, 120.73238], [14.8375, 120.7319]], color: getPathColor(data.field2), weight: 9 },
+    { positions: [[14.8435, 120.73494], [14.8428, 120.73513], [14.84249, 120.73533], [14.8412, 120.73634], [14.8405, 120.7366], [14.83923, 120.7368]], color: getPathColor(data.field2), weight: 9 },
+    { positions: [[14.8393, 120.7367], [14.83927, 120.73588], [14.83907, 120.7345], [14.83812, 120.73238], [14.8375, 120.7319]], color: getPathColor(data.field3), weight: 9 },
     // { positions: [[14.8375, 120.7319], [14.8375, 120.7319], [14.836, 120.73152], [14.8355, 120.73152], [14.83441, 120.73166], [14.8336, 120.73195]], color: getPathColor(data.field4), weight: 9 }
   ];
 
@@ -201,7 +201,7 @@ function App() {
       return () => clearInterval(interval);
     }, []);  // Empty dependency array means this runs once on component mount
 
-    if (isLoading || !data.field1 || !data.field2 || !smoothingData.device1 || !smoothingData.device2) {
+    if (isLoading || !data.field2 || !data.field3 || !smoothingData.device2 || !smoothingData.device3) {
       return <div>Loading...</div>;
     }
 
