@@ -42,7 +42,8 @@ THINGSPEAK_READ_URL = 'https://api.thingspeak.com/channels/2683477/feeds.json'
 def get_data():
 
     params = {
-        'api_key': THINGSPEAK_READ_API_KEY
+        'api_key': THINGSPEAK_READ_API_KEY,
+        'results': 8000
     }
 
     response = requests.get(THINGSPEAK_READ_URL, params=params)
