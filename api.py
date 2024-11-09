@@ -161,7 +161,8 @@ def get_latest():
         'field4': None
     }
     params = {
-        'api_key': THINGSPEAK_READ_API_KEY
+        'api_key': THINGSPEAK_READ_API_KEY,
+        'results': 8000
     }
 
     response = requests.get(THINGSPEAK_READ_URL, params=params)
