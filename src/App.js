@@ -137,7 +137,7 @@ function App() {
 
    // Function to fetch data from the Flask API
   const fetchData = () => {
-    fetch("http://127.0.0.1:5000/get_latest")
+    fetch("http://webgis-api.up.railway.app/get_latest")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -163,7 +163,7 @@ function App() {
 
 
     const fetchSmoothData = () => {
-      fetch("http://127.0.0.1:5000/get_smoothing_data")
+      fetch("http://webgis-api.up.railway.app/get_smoothing_data")
         .then((res) => {
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
