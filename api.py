@@ -59,7 +59,8 @@ def get_data():
 def get_smoothing_data():
 
     params = {
-        'api_key': THINGSPEAK_READ_API_KEY
+        'api_key': THINGSPEAK_READ_API_KEY,
+        'results': 8000
     }
 
     response = requests.get(THINGSPEAK_READ_URL, params=params)
@@ -169,8 +170,6 @@ def get_latest():
     # Sort feeds based on "entry_id" in descending order
     sorted_list = sorted(feeds, key=lambda x: x["entry_id"], reverse=True)
 
-    # Print the sorted list to verify
-    print(sorted_list)
     latest_entries =  get_latest_per_device(sorted_list)
     print(latest_entries)
     return latest_entries,200
