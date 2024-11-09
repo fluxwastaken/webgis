@@ -146,7 +146,7 @@ def get_latest_per_device(sorted_entries):
             break
     print(latest_entries)
     # Return the latest entries as a list
-    return [latest_entries[field] for field in latest_entries if latest_entries[field] is not None]
+    return [latest_entries[field] for field in latest_entries]
 
 
 @app.route('/get_latest', methods=['GET'])
