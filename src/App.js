@@ -106,7 +106,7 @@ function App() {
   // Define markers with conditional checks for flood data
   const markers = [
     {
-      position: [14.84249, 120.73535],
+      position: [14.842162, 120.735558],
       details: {
         deviceNo: "Device 2",
         location: "Capati Videoke",
@@ -116,7 +116,7 @@ function App() {
       }
     },
     {
-      position: [14.83927, 120.73588],
+      position: [14.839167, 120.735987],
       details: {
         deviceNo: "Device 3",
         location: "Charis Store",
@@ -130,8 +130,8 @@ function App() {
   // Define paths dynamically based on flood levels
   const paths = [
     // { positions: [[14.8485, 120.7357],[14.8468, 120.73569], [14.8460, 120.73535], [14.8451, 120.7349], [14.8446, 120.73485], [14.8435, 120.73494]], color: getPathColor(data.field1), weight: 9 },
-    { positions: [[14.8435, 120.73494], [14.8428, 120.73513], [14.84249, 120.73533], [14.8412, 120.73634], [14.8405, 120.7366], [14.83923, 120.7368]], color: getPathColor(data.field2), weight: 9 },
-    { positions: [[14.8393, 120.7367], [14.83927, 120.73588], [14.83907, 120.7345], [14.83812, 120.73238], [14.8375, 120.7319]], color: getPathColor(data.field3), weight: 9 },
+    { positions: [[14.842401, 120.735344], [14.842162, 120.735558], [14.8412, 120.73634], [14.840827, 120.736457]], color: getPathColor(data.field2), weight: 9 },
+    { positions: [[14.839292, 120.736634], [14.839178, 120.735512]], color: getPathColor(data.field3), weight: 9 },
     // { positions: [[14.8375, 120.7319], [14.8375, 120.7319], [14.836, 120.73152], [14.8355, 120.73152], [14.83441, 120.73166], [14.8336, 120.73195]], color: getPathColor(data.field4), weight: 9 }
   ];
 
