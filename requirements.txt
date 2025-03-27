@@ -5,9 +5,6 @@ pandas
 numpy
 statsmodels
 gunicorn
-csv
-matplotlib.pyplot
-statsmodels.tsa.api
-statsmodels.tsa.holtwinters
-sklearn.metrics
+matplotlib
+scikit-learn
 tabulate
