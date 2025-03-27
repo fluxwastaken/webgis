@@ -272,7 +272,7 @@ function App() {
           <p><strong>Location:</strong> {selectedPopup.location}</p>
           <p><strong>Current Flood Level:</strong> {selectedPopup.floodLevel}</p>
           <p><strong>Warning Message:</strong> {selectedPopup.warning}</p>
-          <p><strong>Forecast Flood Level:</strong> {selectedPopup.forecast}</p>
+          <p><strong>10-minute Flood Forecast:</strong> {selectedPopup.forecast}</p>
         </div>
       )}
     </div>
