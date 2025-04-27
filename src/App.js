@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import './App.css';  
+import './App.css';
 import L from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -10,10 +10,10 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 const defaultIcon = L.icon({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
-  iconSize: [18, 30], 
-  iconAnchor: [10, 28], 
-  popupAnchor: [1, -34], 
-  shadowSize: [25, 25]  
+  iconSize: [18, 30],
+  iconAnchor: [10, 28],
+  popupAnchor: [1, -34],
+  shadowSize: [25, 25]
 });
 
 function App() {
@@ -27,22 +27,22 @@ function App() {
 
   // Define color values
   const colors = {
-    green: "rgba(11, 156, 49, 0.5)", 
-    yellow: "rgba(225, 173, 1, 0.5)",      
-    red: "rgba(180, 0, 50, 0.5)"            
+    green: "rgba(11, 156, 49, 0.5)",
+    yellow: "rgba(225, 173, 1, 0.5)",
+    red: "rgba(180, 0, 50, 0.5)"
   };
-  
+
   // Define the warning levels for flood levels
   const legendItems = {
-    greenWarning1: "Gutter deep flood", 
-    greenWarning2: "Half-knee deep flood", 
-    yellowWarning1: "Half-tire deep flood",  
-    yellowWarning2: "Knee deep flood",  
-    redWarning1: "Tire deep flood", 
-    redWarning2: "Waist deep flood", 
-    redWarning3: "Chest deep flood" 
+    greenWarning1: "Gutter deep flood",
+    greenWarning2: "Half-knee deep flood",
+    yellowWarning1: "Half-tire deep flood",
+    yellowWarning2: "Knee deep flood",
+    redWarning1: "Tire deep flood",
+    redWarning2: "Waist deep flood",
+    redWarning3: "Chest deep flood"
   };
-  
+
   // Function to determine the appropriate warning based on flood level
   const getFloodWarning = (floodLevel) => {
     const level = parseFloat(floodLevel); // Convert string to float
@@ -77,7 +77,7 @@ function App() {
     } else if (level > 0.50){
       return colors.red;
     }
-  };  
+  };
 
   //set data from backend
   const [data, setdata] = useState({
@@ -112,7 +112,7 @@ function App() {
         location: "Capati Videoke",
         floodLevel: isValidFloodData(data?.field2) ? `${data.field2} m` : "No data available",
         warning: isValidFloodData(data?.field2) ? getFloodWarning(data.field2) : "No warning data",
-        forecast: isValidFloodData(smoothingData?.device2) ? `${smoothingData.device2} m` : "No forecast data available"
+        // forecast: isValidFloodData(smoothingData?.device2) ? `${smoothingData.device2} m` : "No forecast data available"
       }
     },
     {
@@ -122,7 +122,7 @@ function App() {
         location: "Charis Store",
         floodLevel: isValidFloodData(data?.field3) ? `${data.field3} m` : "No data available",
         warning: isValidFloodData(data?.field3) ? getFloodWarning(data.field3) : "No warning data",
-        forecast: isValidFloodData(smoothingData?.device3) ? `${smoothingData.device3} m` : "No forecast data available"
+        // forecast: isValidFloodData(smoothingData?.device3) ? `${smoothingData.device3} m` : "No forecast data available"
       }
     }
   ];
@@ -137,7 +137,7 @@ function App() {
 
    // Function to fetch data from the Flask API
   const fetchData = () => {
-    fetch("https://webgis-production-0df7.up.railway.app/get_latest")
+    fetch("http://127.0.0.1:5000/get_latest")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -147,63 +147,60 @@ function App() {
       .then((feeds) => {
         console.log(feeds)
         if (feeds && feeds.length > 0) {
-          // Assuming feeds is an array of values for field1, field2, field3, field4
           setdata({
-            field1: (feeds[0] / 100).toFixed(4),
-            field2: (feeds[1] / 100).toFixed(4),
-            field3: (feeds[2] / 100).toFixed(4),
-            field4: (feeds[3] / 100).toFixed(4),
+            field2: (feeds[0] / 100).toFixed(4),
+            field3: (feeds[1] / 100).toFixed(4),
           });
-        } 
+        }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);  // Log any error that occurs
+        console.error("Error fetching data:", error);
       });
   };
 
+  const [forecastData, setForecastData] = useState({
+    f10: null, t10: null,
+    f30: null, t30: null,
+    f60: null, t60: null,
+  });
 
-    const fetchSmoothData = () => {
-      fetch("https://webgis-production-0df7.up.railway.app/get_smoothing_data")
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then((feeds) => {
-          console.log(feeds)
-          if (feeds) {
-            setSmoothingData({
-              device1: (feeds.device1 / 100).toFixed(4),
-              device2: (feeds.device2 / 100).toFixed(4),
-              device3: (feeds.device3 / 100).toFixed(4),
-              device4: (feeds.device4 / 100).toFixed(4)
-            });
-          }
-        })        
-        .catch((error) => {
-          console.error("Error fetching data:", error);  // Log any error that occurs
+  const fetchForecast = () => {
+    fetch("http://127.0.0.1:5000/forecast_data")
+      .then(res => {
+        if (!res.ok) throw new Error(res.status);
+        return res.json();
+      })
+      .then(data => {
+        setForecastData({
+          f10:  (data.forecast_10min  / 100).toFixed(4),
+          t10:  data.timestamp_10min,
+          f30:  (data.forecast_30min  / 100).toFixed(4),
+          t30:  data.timestamp_30min,
+          f60:  (data.forecast_60min  / 100).toFixed(4),
+          t60:  data.timestamp_60min,
         });
-    };    
+      })
+      .catch(console.error);
+  };
 
-    // Using useEffect for initial data fetch and setting up the interval
-    useEffect(() => {
-      fetchData(); // Fetch data on component mount
-      fetchSmoothData();
-  
-      const interval = setInterval(() => {
-        fetchData();
-        fetchSmoothData();
-      }, 300000);
-  
-      setTimeout(() => setIsLoading(false), 1000);
-  
-      return () => clearInterval(interval);
-    }, []);  // Empty dependency array means this runs once on component mount
+  // Using useEffect for initial data fetch and setting up the interval
+  useEffect(() => {
+    fetchData(); // Fetch data on component mount
+    fetchForecast();
 
-    if (isLoading || !data.field2 || !data.field3 || !smoothingData.device2 || !smoothingData.device3) {
-      return <div>Loading...</div>;
-    }
+    const interval = setInterval(() => {
+      fetchData();
+      fetchForecast();
+    }, 600000);
+
+    setTimeout(() => setIsLoading(false), 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isLoading || !data.field2 || !data.field3) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="map-container">
@@ -235,8 +232,8 @@ function App() {
           positions={path.positions}
           color={path.color}
           weight={path.weight}
-          lineCap="butt"   // Boxy ends
-          lineJoin="miter" // Boxy corners
+          lineCap="butt"
+          lineJoin="miter"
         />
       ))}
       </MapContainer>
@@ -272,7 +269,10 @@ function App() {
           <p><strong>Location:</strong> {selectedPopup.location}</p>
           <p><strong>Current Flood Level:</strong> {selectedPopup.floodLevel}</p>
           <p><strong>Warning Message:</strong> {selectedPopup.warning}</p>
-          <p><strong>10-minute Flood Forecast:</strong> {selectedPopup.forecast}</p>
+          <h3>Forecasted Water Depth:</h3>
+          <p><strong>{forecastData.t10}</strong> : {forecastData.f10} m  </p>
+          <p><strong>{forecastData.t30}</strong> : {forecastData.f30} m  </p>
+          <p><strong>{forecastData.t60}</strong> : {forecastData.f60} m  </p>
         </div>
       )}
     </div>
