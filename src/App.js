@@ -137,7 +137,7 @@ function App() {
 
    // Function to fetch data from the Flask API
   const fetchData = () => {
-    fetch("http://127.0.0.1:5000/get_latest")
+    fetch("https://webgis-production-0df7.up.railway.app/get_latest")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -165,7 +165,7 @@ function App() {
   });
 
   const fetchForecast = () => {
-    fetch("http://127.0.0.1:5000/forecast_data")
+    fetch("https://webgis-production-0df7.up.railway.app/forecast_data")
       .then(res => {
         if (!res.ok) throw new Error(res.status);
         return res.json();
